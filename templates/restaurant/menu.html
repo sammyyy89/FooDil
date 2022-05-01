@@ -1,0 +1,91 @@
+{% extends 'restaurant/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+
+<div class="text-center">
+    <h4>{{ user.restaurant_account.name }} Menu</h4>
+</div>
+
+<div class="culmn">
+    <center>
+
+        <button class="btn btn-primary"><a href="{% url 'add_menu' %}"
+                style="color:#fff; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight:bold;">Add
+                a new item</a></button>
+        <hr>
+        <form method="get" style="font-family: 'Montserrat', sans-serif; margin-top: 10px;">
+            <strong>Search by </strong> |&nbsp; {{ myFilter.form }}
+
+            <button class="btn-warning">Search</button>
+        </form>
+
+        <table class="table table-bordered text-center" id="menuData"
+            style="margin-top: 30px; font-family: 'Montserrat', sans-serif;">
+            <tr>
+                <th scope="col">Item ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Item</th>
+                <th scope="col">Image</th>
+                <th scope="col">Price</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+            {% for x in data %}
+            <tr>
+                <td>{{x.id}}</td>
+                <td>{{x.category}}</td>
+                <td>{{x.item}}</td>
+                <td>
+                    {% if x.itemImage %}
+                    <img src="{{ x.itemImage.url }}" style="width:100px;">
+                    {% else %}
+                    <p>No Image</p>
+                    {% endif %}
+                </td>
+                <td>${{x.price}}</td>
+                <td><a href="{% url 'update_item' itemID=x.id %}" class="btn btn-success myBtn"><i
+                            class="fa-solid fa-pen"></i></a></td>
+                <td><a href="{% url 'delete_item' itemID=x.id %}" class="btn btn-danger myBtn"><i
+                            class="fa-solid fa-trash-can"></i></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </center>
+</div>
+<hr>
+
+<!--
+<script type="text/javascript">
+    function searchData(){
+        let input, table, tr, td, filter, i, displayData;
+        input = document.getElementById('category');
+        filter = input.value.toLowerCase();
+        table = document.getElementById('menuData');
+        tr = table.getElementsByTagName('tr');
+
+        for (i=0; i<tr.length; i++)
+        {
+            td=tr[i].getElementsByTagName('td')[1];
+            if(td)
+            {
+                displayData=td.innerText;
+                if(displayData.toLowerCase().indexOf(filter) > -1)
+                {
+                    tr[i].style.display = "";
+                }
+                else
+                {
+                    tr[i].style.display="none";
+                }
+            }
+        }
+    }
+</script>
+-->
+
+{% endblock %}

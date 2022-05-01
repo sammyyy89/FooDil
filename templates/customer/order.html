@@ -1,0 +1,45 @@
+{% extends 'customer/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+
+<div class="culmn">
+    <h5 class="text-center" style="color: red;">Click restaurant's name to see the menu!</h5>
+    <br><br>
+
+    <form method="get" class="text-center">
+        <p> {{store_filter.form}}
+            <button class="myBtn" type="submit" style="margin-left: 15px; ">Search</button>
+        </p>
+    </form>
+    <br>
+    <table class="table table-hover text-center" style="font-family: 'Montserrat', sans-serif;">
+        <thead>
+            <tr>
+                <th scope="col">Restaurant</th>
+                <th scope="col">Image</th>
+                <th scope="col">Category</th>
+                <th scope="col">Website</th>
+            </tr>
+        </thead>
+        <tbody id="restaurant_list">
+            {% for restaurant in restaurants %}
+            <tr>
+                <td><a href="{% url 'store_detail' restaurantID=restaurant.restaurantID %}"
+                        style="text-decoration:none; color:black;">{{ restaurant.name}}</a></td>
+                <td>
+                    {% if restaurant.image %}
+                    <img src="{{ restaurant.image.url }}" style="width:150px; height: 150px;">
+                    {% else %}
+                    <p>No Image</p>
+                    {% endif %}
+                </td>
+                <td>{{ restaurant.country}}</td>
+                <td><a href="{{restaurant.website}}" style="text-decoration:none;">{{ restaurant.website}} </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

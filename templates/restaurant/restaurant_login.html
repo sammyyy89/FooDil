@@ -1,0 +1,24 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<hr>
+<div id="loginForm">
+    <h1 class="text-center" style="margin-bottom: 30px;">FooDil Business Login</h1>
+    <form method="POST" class="form-group">
+        <hr>
+        {% for message in messages %}
+        <p class="text-center alert alert-danger">{{ message }}</p>
+        {% endfor %}
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" class="form-control">
+        <br>
+        <input type="password" name="password" placeholder="Password" class="form-control">
+        <button type="submit" class="bg-yellow col-md-12 myBtn" id="loginBtn">Login</button>
+        <p class="text-center">Don't have an account? Create one <a href="{% url 'r_signup' %}">here</a></p>
+        <p class="text-center">Forgot password? Click <a href="#">here</a></p>
+        <hr>
+    </form>
+
+</div>
+<hr>
+{% endblock %}

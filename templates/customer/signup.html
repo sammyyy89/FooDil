@@ -1,0 +1,76 @@
+{% extends 'customer/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+
+<div class="text-center">
+    <h4>If you want a business account, <a href="{% url 'r_signup' %}" style="font-weight: bold; text-decoration: none;">click here!</a>
+    </h4>
+</div>
+<hr>
+<form method="POST" id="signupForm" autocomplete="off">
+    {% csrf_token %}
+    <div class="form-inline">
+        <div class="form-group mb-4">
+            {{ form.username|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.password1|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.password2|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.first_name|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.last_name|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ s_form.phone|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.email|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ s_form.address_1|as_crispy_field }}
+        </div>
+        <div class="form-group mb-4">
+            {{ s_form.address_2|as_crispy_field }}
+        </div>
+        <div class="form-row">
+            <div class="form-group mb-4">
+                {{ s_form.city|as_crispy_field }}
+            </div>
+            <div class="form-group mb-4">
+                {{ s_form.state|as_crispy_field }}
+            </div>
+            <div class="form-group mb-4">
+                {{ s_form.zip_code|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="bg-yellow col-md-12 myBtn">Sign Up</button>
+</form>
+<hr>
+{% for message in messages %}
+{% if message.tags == 'success' %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let msg = "{{ message }}";
+    // swal("Thank you!", msg, "success")
+    swal({
+        title: "Thank you!",
+        text: msg,
+        type: "success"
+    }).then(function () {
+        window.location = "{% url 'index' %}"
+    });
+</script>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

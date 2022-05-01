@@ -1,0 +1,67 @@
+{% extends 'customer/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    .hidden {
+        display: none
+    }
+</style>
+
+<br>
+
+<center>
+    <h3>{{ store.name }} Menu</h3>
+    <button class="btn-warning myBtn"><a href="{% url 'order' %}" style="text-decoration: none; color:black;">Go
+            Back</a></button>
+
+    <button class="btn-danger myBtn" style="margin-left: 30px;"><a href="{% url 'cart' %}" style="text-decoration: none; color:black;">My Cart</a></button>
+</center>
+<hr>
+<div class="container">
+    <form method="get" class="text-center">
+        <p> {{item_filter.form}}
+            <button class="myBtn" type="submit" style="margin-left: 15px; ">Search</button>
+        </p>
+    </form>
+    <table class="table table-hover text-center" style="font-family: 'Montserrat', sans-serif;">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Category</th>
+                <th scope="col">Image</th>
+                <th scope="col">Price</th>
+                <th scope="col">Add to Cart</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in menu %}
+            <tr>
+                <td>{{item.item}}</td>
+                <td>{{item.category}}</td>
+                <td>
+                    {% if item.itemImage %}
+                    <img src="{{ item.itemImage.url }}" style="width:100px;">
+                    {% else %}
+                    <p>No Image</p>
+                    {% endif %}
+                </td>
+                <td>{{ item.price }}</td>
+                <td><button data-item={{item.id}} data-action="add" class="btn add-btn update-cart" onclick="added()"
+                        style="outline:none; box-shadow: none; background-color: #fddc57; border-radius: 4px;"><i
+                            class="fa-solid fa-cart-shopping"></i></button><br><small class="item_added hidden">Item
+                        added</small></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function added() {
+        alert('Added!')
+    }
+</script>
+
+{% endblock %}

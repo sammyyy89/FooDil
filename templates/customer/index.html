@@ -1,0 +1,39 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<section id="home" class="home bg-black fix">
+    <div class="container">
+        <div class="row">
+            <div class="main_home text-center">
+                <div class="col-md-12">
+                    <div class="home_text">
+                        <h1 class="text-yellow">Welcome to FooDil</h1>
+                        <h3 class="text-white text-uppercase">Make Your Home a Restaurant</h3>
+                    </div>
+
+                    <input type="text" id="search" placeholder="Find nearby restaurants!" autocomplete="off">
+                    <button type="submit" class="myBtn">Go!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about bg-yellow roomy-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="main_about text-center">
+                    <h1 class="text-black">Why Bother Cooking? </h1>
+                    <h2 class="text-white"> <i class="fa-solid fa-champagne-glasses"></i> </h2>
+                    <h3 class="text-black text-uppercase">Stay home, you got us!</h3>
+
+                    <a href="{% url 'order' %}" id="orderBtn" class="btn btn-light btn-lg m-top-100">Order
+                        Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

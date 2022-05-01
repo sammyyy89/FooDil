@@ -1,0 +1,54 @@
+{% extends 'restaurant/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<div class="text-center">
+    <h4>Update Details: {{menu.item}}</h4> 
+</div>
+<hr>
+<div class="container" style="width:500px;">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div class="container" style="width: 500px; font-family: 'Montserrat', sans-serif; font-weight:bold;" >
+            {% csrf_token %}
+            <div class="form-inline">
+                <div class="form-group mb-4" hidden>
+                    {{ form.restaurantID|as_crispy_field }}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.item|as_crispy_field }}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.itemImage|as_crispy_field }}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.price|as_crispy_field }}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.category|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="bg-yellow col-md-12 myBtn">Update</button>
+    </form>
+</div>
+<hr>
+{% for message in messages %}
+{% if message.tags == 'success' %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let msg = "{{ message }}";
+    swal({
+        title: "Done!",
+        text: msg,
+        type: "success"
+    }).then(function () {
+        window.location = "{% url 'r_index' %}"
+    });
+</script>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
