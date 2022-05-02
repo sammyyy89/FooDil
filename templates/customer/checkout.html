@@ -30,7 +30,19 @@
 </style>
 
 <div class='container'>
+    <center>
+        {% if not items %}
+        <br><br>
+        <h1>Uh-Oh!</h1>
+        <br>
+        <img src="{% static 'customer/images/empty.png' %}" />
+        <br><br>
+        <h3>Looks like you have not ordered anything. <br> Go ahead & explore nearby restaurants!</h3>
+        <br>
+        {% else %}
+    </center>
     <div class='row'>
+        <br><br>
         <h3 class="text-center" style="margin-top: 15px; margin-bottom: 40px;">You're almost there,
             {{request.user.first_name}}!</h3>
         <hr>
@@ -131,7 +143,7 @@
 
                                 <div>
                                     <label for="note" class="form-label">Note</label>
-                                    <textarea rows='3' class="form-control" id="note" name='note' required
+                                    <textarea rows='3' class="form-control" id="note" name='note'
                                         placeholder="e.g. No onion, Allergic to dairy, etc..."></textarea>
                                 </div>
 
@@ -203,7 +215,7 @@
                 <h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
             </center>
         </div>
-
+        {% endif %}
     </div>
 </div>
 

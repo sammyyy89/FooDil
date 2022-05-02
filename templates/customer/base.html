@@ -107,7 +107,8 @@
                                     style="margin-right: 5px;"></i> My cart</a>
                             <a class="dropdown-item" href="{% url 'checkout' %}"><i class="fa-brands fa-cc-paypal"></i>
                                 Checkout</a>
-                            <a class="dropdown-item" href="#"> <i class="fa-solid fa-key"></i>
+                            <a class="dropdown-item" href="{% url 'status' %}"><i class="fa-solid fa-utensils"></i> Order Status</a>
+                            <a class="dropdown-item" href="{% url 'change_password' %}"> <i class="fa-solid fa-key"></i>
                                 Change Password</a>
                             <a class="dropdown-item" href="{% url 'logout' %}"> <i
                                     class="fa-solid fa-right-from-bracket" style="margin-right: 5px;"></i> Sign Out</a>
@@ -154,7 +155,7 @@
 
     <script src="{% static 'customer/javascript/main.js' %}" type="text/javascript"></script>
 
-    <script src="{% static 'customer/javascript/cart.js' %}" type="text/javascript"></script>
+    <!--script src="{% static 'customer/javascript/cart.js' %}" type="text/javascript"></!--script-->
 
     {% include 'customer/footer.html' %}
 </body>

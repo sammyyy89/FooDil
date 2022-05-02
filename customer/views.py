@@ -1,10 +1,13 @@
 from multiprocessing.connection import deliver_challenge
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 import json
 import datetime
+
+from urllib3 import HTTPResponse
 
 from customer.decorators import unauthenticated_user
 from customer.filters import StoreFilter, MenuFilter
@@ -94,6 +97,8 @@ def order(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def Store_Detail(request, restaurantID):
+    #request.session['restaurantID'] = restaurantID 
+
     menu = Menu.objects.filter(restaurantID=restaurantID)
     store = Restaurant_Account.objects.get(restaurantID=restaurantID)
 
@@ -106,6 +111,7 @@ def Store_Detail(request, restaurantID):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def Cart(request):
+    #restaurantID = request.session.get('restaurantID')
     customer = Customer_Account.objects.get(user=request.user.id)
     
     if request.user.is_superuser:
@@ -113,11 +119,11 @@ def Cart(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         cartItems = order.get_cart_items
     else:
-        order, created = Order.objects.get_or_create(username=customer, complete=False)
+        order, created = Order.objects.get_or_create(username=customer, complete=False, )
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
 
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    context = {'items': items, 'order': order, 'cartItems': cartItems, }
     return render(request, 'customer/cart.html', context)
 
 @login_required(login_url='login')
@@ -140,7 +146,7 @@ def updateItem(request):
     print('itemId:', itemId)
     print('action:', action)
 
-    customer = request.user.id
+    customer = Customer_Account.objects.get(user=request.user.id)
     item = Menu.objects.get(id=itemId)
     order, created = Order.objects.get_or_create(username=customer, complete=False)
 
@@ -175,7 +181,7 @@ def processOrder(request):
     order.save()
 
     DeliveryAddress.objects.create(
-        #username = Customer_Account.objects.get(user=request.user.username).id,
+        username = Customer_Account.objects.get(user=request.user.id),
         order=order,
         address_1=data['form']['address_1'],
         address_2=data['form']['address_2'],
@@ -187,3 +193,30 @@ def processOrder(request):
         status=data['form']['status']
     )
     return JsonResponse('Payment complete!', safe=False)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin', 'customer'])
+def Status(request):
+    customer = Customer_Account.objects.get(user=request.user.id)
+    info = DeliveryAddress.objects.filter(username=customer)
+
+    context = {'info': info, }
+    return render(request, 'customer/status.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin', 'customer'])
+def change_password(request):
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user=form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, "Password changed successfully!")
+            # return redirect('index')
+        else:
+            #messages.error(request, 'Please correct the error and try again.')
+            print('Error')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'customer/change_password.html', {'form': form})

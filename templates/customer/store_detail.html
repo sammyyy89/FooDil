@@ -16,7 +16,8 @@
     <button class="btn-warning myBtn"><a href="{% url 'order' %}" style="text-decoration: none; color:black;">Go
             Back</a></button>
 
-    <button class="btn-danger myBtn" style="margin-left: 30px;"><a href="{% url 'cart' %}" style="text-decoration: none; color:black;">My Cart</a></button>
+    <button class="btn-danger myBtn" style="margin-left: 30px;"><a href="{% url 'cart' %}"
+            style="text-decoration: none; color:black;">My Cart</a></button>
 </center>
 <hr>
 <div class="container">
@@ -48,19 +49,31 @@
                     {% endif %}
                 </td>
                 <td>{{ item.price }}</td>
-                <td><button data-item={{item.id}} data-action="add" class="btn add-btn update-cart" onclick="added()"
+                <td>
+                    <button type="submit" data-rid={{store.restaurantID}} data-item={{item.id}} data-action="add" class="btn add-btn update-cart" onclick="added()"
                         style="outline:none; box-shadow: none; background-color: #fddc57; border-radius: 4px;"><i
                             class="fa-solid fa-cart-shopping"></i></button><br><small class="item_added hidden">Item
-                        added</small></td>
+                        added</small>
+                    </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 
+
+<script src="{% static 'customer/javascript/cart.js' %}" type="text/javascript"></script>
+<!-- <script-- src="https://code.jquery.com/jquery-3.6.0.min.js"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 <script type="text/javascript">
+    let rid = '{{store.restaurantID}}'
+    let url = "{% url 'cart' %}"
+
     function added() {
-        alert('Added!')
+        alert("Added!")
+        
     }
 </script>
 

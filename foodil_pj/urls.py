@@ -37,6 +37,8 @@ urlpatterns = [
     path('customer/checkout/', c_view.Checkout, name='checkout'),
     path('customer/update_item/', c_view.updateItem, name="update_item"),
     path('customer/process_order/', c_view.processOrder, name='process_order'),
+    path('customer/status/', c_view.Status, name='status'),
+    path('customer/change_password/', c_view.change_password, name='change_password'),
     
     path('restaurant/', r_view.R_Index, name='r_index'),
     path('restaurant/signup/', r_view.R_Signup, name='r_signup'),
@@ -46,6 +48,7 @@ urlpatterns = [
     path('restaurant/add_menu/', r_view.Add_Menu, name='add_menu'),
     path('restaurant/update_item/<int:itemID>/', r_view.Update_Item, name='update_item'),
     path('restaurant/delete_item/<int:itemID>/', r_view.delete_item, name='delete_item'),
+    path('restaurant/orders/', r_view.Orders, name='orders'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

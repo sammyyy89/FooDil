@@ -1,0 +1,106 @@
+{% extends 'customer/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<br>
+
+<center class="container">
+    <h1>Your order status</h1>
+    <hr>
+    {% if not info %}
+    <h1>Hmm...</h1>
+    <br>
+    <img src="{% static 'customer/images/empty.png' %}" />
+    <br><br>
+    <h3>Looks like you have not ordered anything.</h3> <br>
+    <h5>Click <a href="{% url 'cart' %}">here</a> if you've already added items.</h5> <br>
+    <h5>Otherwise, click <a href="{% url 'order' %}">here</a> to explore nearby restaurant!</h5>
+
+    {% else %}
+    <form>
+        {% for x in info %}
+        <h4>
+            <div class="form-group row">
+                <label for="customer" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-user"></i> Recipient
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext"
+                        value="{{request.user.first_name}} {{request.user.last_name}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="status" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-circle-question"></i> Status
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" value="{{x.status}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="note" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-circle-exclamation"></i> Note
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" value="{{x.note}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="address_1" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-road"></i> Address 1
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.address_1}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="address_2" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-building"></i> Address 2
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.address_2}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="city" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-city"></i> City
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.city}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="state" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-flag-usa"></i> State
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.state}}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="zip" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-location-dot"></i> Zip
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.zip_code}}">
+                </div>
+            </div>
+        </h4> <br><hr>
+        {% endfor %}
+    </form>
+
+    <h4 style="color: red"><strong>If any information above is incorrect, please call the restaurant as soon as
+            possible.</strong></h4>
+    {% endif %}
+    <br>
+</center>
+{% endblock %}

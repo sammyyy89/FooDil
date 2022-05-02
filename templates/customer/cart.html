@@ -5,11 +5,13 @@
 {% block content %}
 <center>
     <br>
+
     <h3>{{ request.user.first_name }} 's cart</h3>
     <a class="btn btn-outline-dark" href="{% url 'order' %}">&#x2190; I want to add more items</a>
     <br><br>
 
 </center>
+
 <div class="container">
     <div class="col-lg-12">
         <div class="box-element">
@@ -25,7 +27,8 @@
                         <h5>Total:<strong> $ {{order.get_cart_total|floatformat:2}}</strong></h5>
                     </th>
                     <th>
-                        <a style="float:right; margin:5px; text-decoration: none;" class="myBtn" style= "background-color: #fddc57;" href= "{% url 'checkout' %}" >Checkout</a>
+                        <a style="float:right; margin:5px; text-decoration: none;" class="myBtn"
+                            style="background-color: #fddc57;" href="{% url 'checkout' %}">Checkout</a>
                     </th>
                 </tr>
             </table>
@@ -34,6 +37,14 @@
 
         <br>
         <table class="table text-center" style="font-family: 'Montserrat', sans-serif;">
+            {% if not items %}
+            <center>
+                <img src="{% static 'customer/images/empty.png' %}" />
+                <br><br>
+                <h3>Your cart is currently empty. <br> Click <a href="{% url 'order' %}">here</a> to explore nearby
+                    restaurants!</h3>
+            </center>
+            {% else %}
             <thead>
                 <tr>
                     <th scope="col">Item</th>
@@ -51,17 +62,62 @@
                         {{item.quantity}}
                         <div class="quantity" style="display: inline-block; font-weight: 700; padding-right:10px;">
                             <img data-item="{{item.item.id}}" data-action="add" class="chg-quantity update-cart"
-                                src="{% static 'customer/images/arrow-up.png' %}" style="width: 12px;background-color: #fff; cursor: pointer; display:block; margin-top: 3px; margin-left: 5px;">
+                                src="{% static 'customer/images/arrow-up.png' %}"
+                                style="width: 12px;background-color: #fff; cursor: pointer; display:block; margin-top: 3px; margin-left: 5px;">
 
-                            <img data-item="{{item.item.id}}" data-action="remove"
-                                class="chg-quantity update-cart" src="{% static 'customer/images/arrow-down.png' %}" style="width: 12px; background-color: #fff; cursor: pointer; display:block; margin-top: 5px; margin-left: 5px;">
+                            <img data-item="{{item.item.id}}" data-action="remove" class="chg-quantity update-cart"
+                                src="{% static 'customer/images/arrow-down.png' %}"
+                                style="width: 12px; background-color: #fff; cursor: pointer; display:block; margin-top: 5px; margin-left: 5px;">
                         </div>
                     </td>
-                    <td><p>${{item.get_total|floatformat:2}}</p></td>
+                    <td>
+                        <p>${{item.get_total|floatformat:2}}</p>
+                    </td>
                 </tr>
                 {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
 </div>
+{{data}}
+<script type="text/javascript">
+    let updateBtns = document.getElementsByClassName('update-cart')
+
+    for (let i = 0; i < updateBtns.length; i++) {
+        updateBtns[i].addEventListener('click', function () {
+            let itemId = this.dataset.item
+            let action = this.dataset.action
+            console.log('itemId:', itemId, 'action:', action)
+
+            updateUserOrder(itemId, action)
+        })
+    }
+
+    function updateUserOrder(itemId, action) {
+        let url = '../update_item/'
+
+        fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({
+                    'itemId': itemId,
+                    'action': action
+                })
+            })
+
+            .then((response) => {
+                return response.json()
+            })
+
+            .then((data) => {
+                console.log('data: ', data)
+                location.reload()
+            })
+    }
+</script>
+
 {% endblock %}

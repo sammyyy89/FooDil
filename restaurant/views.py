@@ -11,6 +11,7 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
 
 from .filters import MenuFilter
+from customer.models import *
 
 def Main(request):
     #logout(request)
@@ -124,3 +125,9 @@ def delete_item(request, itemID):
     item = Menu.objects.get(id=itemID)
     item.delete()
     return redirect('menu')
+
+@login_required(login_url='r_login')
+@allowed_users(allowed_roles=['admin', 'restaurant'])
+def Orders(request):
+    #info = DeliveryAddress.objects.filter()
+    return render(request, 'restaurant/orders.html')
