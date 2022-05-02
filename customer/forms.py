@@ -29,3 +29,4 @@ class SignupForm(forms.ModelForm):
     class Meta:
         model = Customer_Account
         fields = ('phone','address_1', 'address_2', 'city', 'state', 'zip_code')
+

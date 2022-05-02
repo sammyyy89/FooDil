@@ -4,9 +4,10 @@ for (let i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function(){
         let itemId = this.dataset.item
         let action = this.dataset.action
-        console.log('itemId:', itemId, 'action:', action)
+        let rid = this.dataset.rid
+        console.log('itemId:', itemId, 'action:', action, 'rid:', rid)
 
-        updateUserOrder(itemId, action)
+        updateUserOrder(itemId, action, rid)
     })
 }
 /*
@@ -33,7 +34,7 @@ function addCookieItem(itemId, action){
 }
 */ 
 
-function updateUserOrder(itemId, action){
+function updateUserOrder(itemId, action, rid){
     console.log("sending data..")
 
     let url = '../../update_item/'
@@ -44,7 +45,7 @@ function updateUserOrder(itemId, action){
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken, 
         },
-        body:JSON.stringify({'itemId': itemId, 'action': action})
+        body:JSON.stringify({'itemId': itemId, 'action': action, 'rid': rid, })
     })
 
     .then((response) =>{

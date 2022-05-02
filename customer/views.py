@@ -111,6 +111,7 @@ def Store_Detail(request, restaurantID):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def Cart(request):
+    print('카트 페이지')
     #restaurantID = request.session.get('restaurantID')
     customer = Customer_Account.objects.get(user=request.user.id)
     
@@ -125,6 +126,24 @@ def Cart(request):
 
     context = {'items': items, 'order': order, 'cartItems': cartItems, }
     return render(request, 'customer/cart.html', context)
+
+"""
+    if request.user.is_superuser:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order.get_cart_items
+    else:
+        if request.method == 'POST':
+            rid = request.POST['rid']
+    
+            order, created = Order.objects.get_or_create(username=customer, complete=False, restaurantId=rid)
+
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, }
+    return render(request, 'customer/cart.html', context)
+   """
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
@@ -142,12 +161,17 @@ def updateItem(request):
 
     itemId = data['itemId']
     action = data['action']
+    rid = data['rid']
 
     print('itemId:', itemId)
     print('action:', action)
+    print('rid:', rid)
 
     customer = Customer_Account.objects.get(user=request.user.id)
     item = Menu.objects.get(id=itemId)
+    restaurant = Restaurant_Account.objects.get(restaurantID=rid)
+    print('restaurant:', restaurant)
+    
     order, created = Order.objects.get_or_create(username=customer, complete=False)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
@@ -220,3 +244,4 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'customer/change_password.html', {'form': form})
+

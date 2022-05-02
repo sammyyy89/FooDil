@@ -47,6 +47,7 @@
             {% else %}
             <thead>
                 <tr>
+                    <th scope="col">Restaurant</th>
                     <th scope="col">Item</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
@@ -56,16 +57,17 @@
             <tbody>
                 {% for item in items %}
                 <tr>
+                    <td>{{item.item.restaurantID}}</td>
                     <td>{{item.item.item}}</td>
                     <td>{{item.item.price}}</td>
                     <td>
                         {{item.quantity}}
                         <div class="quantity" style="display: inline-block; font-weight: 700; padding-right:10px;">
-                            <img data-item="{{item.item.id}}" data-action="add" class="chg-quantity update-cart"
+                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="add" class="chg-quantity update-cart"
                                 src="{% static 'customer/images/arrow-up.png' %}"
                                 style="width: 12px;background-color: #fff; cursor: pointer; display:block; margin-top: 3px; margin-left: 5px;">
 
-                            <img data-item="{{item.item.id}}" data-action="remove" class="chg-quantity update-cart"
+                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="remove" class="chg-quantity update-cart"
                                 src="{% static 'customer/images/arrow-down.png' %}"
                                 style="width: 12px; background-color: #fff; cursor: pointer; display:block; margin-top: 5px; margin-left: 5px;">
                         </div>
@@ -80,7 +82,7 @@
         </table>
     </div>
 </div>
-{{data}}
+
 <script type="text/javascript">
     let updateBtns = document.getElementsByClassName('update-cart')
 
@@ -88,13 +90,15 @@
         updateBtns[i].addEventListener('click', function () {
             let itemId = this.dataset.item
             let action = this.dataset.action
-            console.log('itemId:', itemId, 'action:', action)
+            let rid = this.dataset.rid
 
-            updateUserOrder(itemId, action)
+            console.log('itemId:', itemId, 'action:', action, 'rid: ', rid)
+
+            updateUserOrder(itemId, action, rid)
         })
     }
 
-    function updateUserOrder(itemId, action) {
+    function updateUserOrder(itemId, action, rid) {
         let url = '../update_item/'
 
         fetch(url, {
@@ -105,7 +109,8 @@
                 },
                 body: JSON.stringify({
                     'itemId': itemId,
-                    'action': action
+                    'action': action,
+                    'rid': rid,
                 })
             })
 

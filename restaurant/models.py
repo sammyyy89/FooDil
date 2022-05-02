@@ -28,7 +28,8 @@ class Restaurant_Account(models.Model):
     country = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.user.username
+        #return self.user.username
+        return str(self.restaurantID)
 
 class Menu(models.Model):
     restaurantID = models.ForeignKey(Restaurant_Account, on_delete=models.CASCADE, default=None, null=True)
