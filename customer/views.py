@@ -156,11 +156,22 @@ def Cart(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def Checkout(request):
-    #customer = request.user.id
     order, created = Order.objects.get_or_create(username=request.user.id, complete=False)
     items = order.orderitem_set.all()
-    context = {'items': items, 'order': order}
-    return render(request, 'customer/checkout.html', context)
+    
+    rids = [x.restaurantID for x in items]
+    result = 'same' 
+    for i in range(len(rids)-1):
+        if rids[i] == rids[i+1]:
+            result = 'same'
+        else:
+            result = 'different'
+    
+    if result != 'same':
+        return redirect('cart')
+    else:
+        context = {'items': items, 'order': order}
+        return render(request, 'customer/checkout.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
