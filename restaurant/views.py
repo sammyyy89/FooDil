@@ -130,4 +130,16 @@ def delete_item(request, itemID):
 @allowed_users(allowed_roles=['admin', 'restaurant'])
 def Orders(request):
     #info = DeliveryAddress.objects.filter()
-    return render(request, 'restaurant/orders.html')
+    #orders = OrderItem.objects.filter(restaurantID=request.user.id)
+    #rid = Restaurant_Account.objects.get(restaurantID=request.user.id)
+    rid = request.user.restaurant_account.restaurantID
+
+    info = DeliveryAddress.objects.filter(restaurantID=rid)
+    orders = OrderItem.objects.filter(restaurantID=rid)
+    print('orders: ', orders)
+
+    #customer = Customer_Account.objects.filter(user=orders.order)
+
+
+    context = {'info': info, 'orders': orders, }
+    return render(request, 'restaurant/orders.html', context)

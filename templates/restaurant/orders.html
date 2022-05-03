@@ -5,27 +5,32 @@
 {% block content %}
 <div class="container">
     <br>
-    <center><h1>Orders Received</h1></center>
+    <center>
+        <h1>Orders Received</h1>
+    </center>
     <br><br>
     <table class="table table-bordered text-center">
         <thead style="background-color: #fddc57;">
             <tr>
+                <th scope="col">Items</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
-                <th scope="col">Items</th>
                 <th scope="col">Note</th>
                 <th scope="col">Status</th>
-                <th scope="col">Phone</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Taylor Swift</td>
-                <td>190 River Rd, Edgewater, NJ, 07020</td>
-                <td>Chai Latte, Kale Salad, Blueberry Bagel</td>
-                <td>No onion!</td>
-                <td>Order Received</td>
-                <td>123-456-7890</td>
+                {% for order in orders %}
+                <td>{{order.item}}</td>
+                {% endfor %}
+
+                {% for x in info %}
+                <td>{{x.username}}</td>
+                <td>{{x.address_2}}, {{x.address_1}}, {{x.city}}, {{x.state}}, {{x.zip_code}}</td>
+                <td>{{x.note}}</td>
+                <td>{{x.status}}</td>
+                {% endfor %}
             </tr>
         </tbody>
     </table>

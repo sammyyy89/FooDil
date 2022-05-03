@@ -74,6 +74,7 @@ class DeliveryAddress(models.Model):
     addedDate = models.DateTimeField(auto_now_add=True)
     note = models.CharField(max_length=255, default=None, null=True, blank=True)
     status = models.CharField(max_length=30, choices=[('current status', 'current status'), ('Order Received', 'Order Received'), ('Preparing', 'Preparing'), ('Picked up', 'Picked up'), ('Delivered', 'Delivered')], default="current status")
+    restaurantID = models.CharField(max_length=10, null=True, blank=True, default=0)
 
     def __str__(self):
         return self.address_1

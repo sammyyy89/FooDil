@@ -148,6 +148,7 @@
                                 </div>
                                 
                                 <input type="hidden" name="status" value="Order Received">
+                                <input type="hidden" name="restaurantID" value="{{rid}}">
                             </div>
 
                         </div>
@@ -283,7 +284,8 @@
             'zipcode': form.zipcode.value,
             'delivery_option': form.option.value,
             'note': form.note.value,
-            'status': form.status.value
+            'status': form.status.value,
+            'restaurantID': form.restaurantID.value
         }
 
         let url = '../process_order/'

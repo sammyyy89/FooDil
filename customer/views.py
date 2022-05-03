@@ -113,7 +113,6 @@ def Store_Detail(request, restaurantID):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def Cart(request):
-    print('카트 페이지')
     #restaurantID = request.session.get('restaurantID')
     customer = Customer_Account.objects.get(user=request.user.id)
     
@@ -127,7 +126,7 @@ def Cart(request):
         cartItems = order.get_cart_items
 
     rids = [x.restaurantID for x in items]
-    result = 'same' 
+    result = '' 
     for i in range(len(rids)-1):
         if rids[i] == rids[i+1]:
             result = 'same'
@@ -163,16 +162,20 @@ def Checkout(request):
 
     rids = [x.restaurantID for x in items]
     result = 'same' 
+    rid = OrderItem.objects.filter(order=order).values_list('restaurantID', flat=True)[0] if len(rids) == 1 else '' 
+
     for i in range(len(rids)-1):
         if rids[i] == rids[i+1]:
+            rid = rids[i]
             result = 'same'
         else:
             result = 'different'
+            rid = ''
     
     if result != 'same':
         return redirect('cart')
     else:
-        context = {'items': items, 'order': order }
+        context = {'items': items, 'order': order, 'rid': rid }
         return render(request, 'customer/checkout.html', context)
 
 @login_required(login_url='login')
@@ -220,8 +223,7 @@ def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
 
-    #username = request.user.username
-    order, created = Order.objects.get_or_create(username=request.user.id, complete=False)
+    order, created = Order.objects.get_or_create(username=Customer_Account.objects.get(user=request.user.id), complete=False)
     total = data['form']['total']
     order.transaction_id = transaction_id
     order.complete = True
@@ -245,8 +247,10 @@ def processOrder(request):
         zip_code=data['form']['zipcode'],
         delivery_option=data['form']['delivery_option'],
         note=data['form']['note'],
-        status=data['form']['status']
+        status=data['form']['status'],
+        restaurantID=data['form']['restaurantID']
     )
+
     return JsonResponse('Payment complete!', safe=False)
 
 @login_required(login_url='login')
