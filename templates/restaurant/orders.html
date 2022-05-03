@@ -6,34 +6,50 @@
 <div class="container">
     <br>
     <center>
-        <h1>Orders Received</h1>
+        <h2>Orders Received</h2>
     </center>
-    <br><br>
+    <br>
+    <h4 class="text-center">Customer Info</h4>
     <table class="table table-bordered text-center">
         <thead style="background-color: #fddc57;">
             <tr>
-                <th scope="col">Items</th>
                 <th scope="col">Name</th>
-                <th scope="col">Address</th>
                 <th scope="col">Note</th>
+                <th scope="col">Address</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
+            {% for x in info %}
             <tr>
-                {% for order in orders %}
-                <td>{{order.item}}</td>
-                {% endfor %}
-
-                {% for x in info %}
                 <td>{{x.username}}</td>
-                <td>{{x.address_2}}, {{x.address_1}}, {{x.city}}, {{x.state}}, {{x.zip_code}}</td>
                 <td>{{x.note}}</td>
+                <td>{{x.address_2}} {{x.address_1}} {{x.city}} {{x.state}} {{x.zip_code}}</td>
                 <td>{{x.status}}</td>
-                {% endfor %}
             </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h4 class="text-center">Orders</h4>
+    <table class="table table-bordered text-center">
+        <thead style="background-color: #fddc57;">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.order}}</td>
+                <td>{{order.item}}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
+
+<!--pagination, add more data, status change ... -->
 
 {% endblock %}
