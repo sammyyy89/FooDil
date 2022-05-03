@@ -50,6 +50,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     addedDate = models.DateTimeField(auto_now_add=True)
+    isPaid = models.BooleanField(default=False, null=True, blank=True)
 
     @property
     def get_total(self):

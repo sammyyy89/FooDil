@@ -1,4 +1,5 @@
 from multiprocessing.connection import deliver_challenge
+from turtle import Turtle
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -11,6 +12,7 @@ from urllib3 import HTTPResponse
 
 from customer.decorators import unauthenticated_user
 from customer.filters import StoreFilter, MenuFilter
+import restaurant
 from .forms import UserForm, SignupForm
 
 from django.contrib.auth.decorators import login_required
@@ -158,7 +160,7 @@ def Cart(request):
 def Checkout(request):
     order, created = Order.objects.get_or_create(username=request.user.id, complete=False)
     items = order.orderitem_set.all()
-    
+
     rids = [x.restaurantID for x in items]
     result = 'same' 
     for i in range(len(rids)-1):
@@ -170,7 +172,7 @@ def Checkout(request):
     if result != 'same':
         return redirect('cart')
     else:
-        context = {'items': items, 'order': order}
+        context = {'items': items, 'order': order }
         return render(request, 'customer/checkout.html', context)
 
 @login_required(login_url='login')
@@ -197,7 +199,7 @@ def updateItem(request):
     orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
 
     if not orderItem:
-        print("카트 비어 있어요")
+        print("Empty cart")
     else: # There are items in cart 
         if action == 'add':
             orderItem.quantity += 1
@@ -209,20 +211,6 @@ def updateItem(request):
 
         if orderItem.quantity <= 0:
             orderItem.delete()
-
-    """    if not items: # 카트가 비어 있는 상태
-        print('비어 있슈')
-        if order.restaurantID == None: # 완전 첫 카트 담기
-            order.restaurantID = restaurant
-            order.save()
-        else: # 담았다가 다 지운 상태라서 order.restaurantID에 값이 있음
-            print("저장된 게 있음")
-    else: # 카트에 물건이 있는 상태
-        print("있어용")
-        order.restaurantID = restaurant
-        order.save()
-"""
-
 
     return JsonResponse('Item was added', safe=False)
 
@@ -241,6 +229,11 @@ def processOrder(request):
     #if total == float(order.get_cart_total):
         #order.complete = True
     order.save()
+
+    ordered = OrderItem.objects.filter(order=order)
+    for ordered_item in ordered:
+        ordered_item.isPaid = True
+        ordered_item.save()
 
     DeliveryAddress.objects.create(
         username = Customer_Account.objects.get(user=request.user.id),
@@ -268,7 +261,6 @@ def Status(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin', 'customer'])
 def change_password(request):
-
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
