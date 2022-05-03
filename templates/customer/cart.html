@@ -7,6 +7,7 @@
     <br>
 
     <h3>{{ request.user.first_name }} 's cart</h3>
+
     <a class="btn btn-outline-dark" href="{% url 'order' %}">&#x2190; I want to add more items</a>
     <br><br>
 
@@ -27,8 +28,13 @@
                         <h5>Total:<strong> $ {{order.get_cart_total|floatformat:2}}</strong></h5>
                     </th>
                     <th>
+                        {% if result == 'same' %}
                         <a style="float:right; margin:5px; text-decoration: none;" class="myBtn"
                             style="background-color: #fddc57;" href="{% url 'checkout' %}">Checkout</a>
+                        {% else %}
+                        <a style="float:right; margin:5px; text-decoration: none;" class="myBtn"
+                            style="background-color: #fddc57;" href="#" onclick="error()">Checkout</a>
+                        {% endif %}
                     </th>
                 </tr>
             </table>
@@ -63,12 +69,12 @@
                     <td>
                         {{item.quantity}}
                         <div class="quantity" style="display: inline-block; font-weight: 700; padding-right:10px;">
-                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="add" class="chg-quantity update-cart"
-                                src="{% static 'customer/images/arrow-up.png' %}"
+                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="add"
+                                class="chg-quantity update-cart" src="{% static 'customer/images/arrow-up.png' %}"
                                 style="width: 12px;background-color: #fff; cursor: pointer; display:block; margin-top: 3px; margin-left: 5px;">
 
-                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="remove" class="chg-quantity update-cart"
-                                src="{% static 'customer/images/arrow-down.png' %}"
+                            <img data-rid="{{item.item.restaurantID}}" data-item="{{item.item.id}}" data-action="remove"
+                                class="chg-quantity update-cart" src="{% static 'customer/images/arrow-down.png' %}"
                                 style="width: 12px; background-color: #fff; cursor: pointer; display:block; margin-top: 5px; margin-left: 5px;">
                         </div>
                     </td>
@@ -125,6 +131,14 @@
             })
     }
 
+    function error() {
+        swal({
+            title: "You can order from the same restaurant at once!",
+            icon: "warning",
+        }).then(function () {
+            window.location.href = "{% url 'cart' %}"
+        })
+    }
 </script>
 
 {% endblock %}

@@ -124,7 +124,15 @@ def Cart(request):
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
 
-    context = {'items': items, 'order': order, 'cartItems': cartItems, }
+    rids = [x.restaurantID for x in items]
+    result = 'same' 
+    for i in range(len(rids)-1):
+        if rids[i] == rids[i+1]:
+            result = 'same'
+        else:
+            result = 'different'
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'result': result,}
     return render(request, 'customer/cart.html', context)
 
 """
