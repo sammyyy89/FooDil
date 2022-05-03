@@ -47,7 +47,7 @@
             {% else %}
             <thead>
                 <tr>
-                    <th scope="col">Restaurant</th>
+                    <th scope="col">Restaurant ID</th>
                     <th scope="col">Item</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
@@ -85,6 +85,7 @@
 
 <script type="text/javascript">
     let updateBtns = document.getElementsByClassName('update-cart')
+    let confirm = document.getElementsByClassName('confirmation')
 
     for (let i = 0; i < updateBtns.length; i++) {
         updateBtns[i].addEventListener('click', function () {
@@ -123,6 +124,7 @@
                 location.reload()
             })
     }
+
 </script>
 
 {% endblock %}

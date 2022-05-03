@@ -173,18 +173,37 @@ def updateItem(request):
     print('restaurant:', restaurant)
     
     order, created = Order.objects.get_or_create(username=customer, complete=False)
+    items = order.orderitem_set.all()
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
 
-    if action == 'add':
-        orderItem.quantity += 1
-    elif action == 'remove':
-        orderItem.quantity -= 1
+    if not orderItem:
+        print("카트 비어 있어요")
+    else: # There are items in cart 
+        if action == 'add':
+            orderItem.quantity += 1
+        elif action == "remove":
+            orderItem.quantity -= 1
+        
+        orderItem.restaurantID = restaurant
+        orderItem.save()
 
-    orderItem.save()
+        if orderItem.quantity <= 0:
+            orderItem.delete()
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
+    """    if not items: # 카트가 비어 있는 상태
+        print('비어 있슈')
+        if order.restaurantID == None: # 완전 첫 카트 담기
+            order.restaurantID = restaurant
+            order.save()
+        else: # 담았다가 다 지운 상태라서 order.restaurantID에 값이 있음
+            print("저장된 게 있음")
+    else: # 카트에 물건이 있는 상태
+        print("있어용")
+        order.restaurantID = restaurant
+        order.save()
+"""
+
 
     return JsonResponse('Item was added', safe=False)
 
@@ -244,4 +263,3 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'customer/change_password.html', {'form': form})
-
