@@ -1,3 +1,4 @@
+from ast import Del
 from multiprocessing.connection import deliver_challenge
 from turtle import Turtle
 from django.shortcuts import get_object_or_404, render, redirect
@@ -21,6 +22,7 @@ from django.contrib.auth.models import Group
 
 from restaurant.models import Menu, Restaurant_Account
 from .models import *
+from django.db.models import F
 
 def Main(request):
     #logout(request)
@@ -234,6 +236,7 @@ def processOrder(request):
 
     ordered = OrderItem.objects.filter(order=order)
     for ordered_item in ordered:
+        ordered_item.transaction_id = transaction_id
         ordered_item.isPaid = True
         ordered_item.save()
 
@@ -248,7 +251,8 @@ def processOrder(request):
         delivery_option=data['form']['delivery_option'],
         note=data['form']['note'],
         status=data['form']['status'],
-        restaurantID=data['form']['restaurantID']
+        restaurantID=data['form']['restaurantID'],
+        transaction_id=transaction_id
     )
 
     return JsonResponse('Payment complete!', safe=False)

@@ -7,7 +7,7 @@
 <br>
 
 <center class="container">
-    <h1>Your order status</h1>
+    <h1>Your order status & history</h1>
     <hr>
     {% if not info %}
     <h1>Hmm...</h1>
@@ -21,7 +21,7 @@
     {% else %}
     <form>
         {% for x in info %}
-        <h4>
+        <h5>
             <div class="form-group row">
                 <label for="customer" class="col-sm-2 col-form-label">
                     <i class="fa-solid fa-user"></i> Recipient
@@ -94,10 +94,38 @@
                     <input type="text" readonly class="form-control" value="{{x.zip_code}}">
                 </div>
             </div>
-        </h4> <br><hr>
+            <br>
+            <div class="form-group row">
+                <label for="time" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-clock"></i> Order submitted at
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.addedDate}} (EST)">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="tid" class="col-sm-2 col-form-label">
+                    <i class="fa-solid fa-comments-dollar"></i> Transaction id
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" value="{{x.transaction_id}}">
+                </div>
+            </div>
+
+        </h5>
+        <br>
+        <h5>
+            <section>
+                <i class="fa-solid fa-burger"></i> <strong>You ordered: </strong>
+                {% for item in items %}
+                {{item}},
+                {% endfor %}
+            </section>
+        </h5>
+        <hr>
         {% endfor %}
     </form>
-
     <h4 style="color: red"><strong>If any information above is incorrect, please call the restaurant as soon as
             possible.</strong></h4>
     {% endif %}

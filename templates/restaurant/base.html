@@ -26,6 +26,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="text/javascript">
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+    </script>
 </head>
 
 <body>
@@ -38,7 +57,7 @@
 
             <ul class="navbar__menu">
                 <li><a href="{% url 'main' %}">FooDil Main</a></li>
-                
+
                 {% if request.user.is_anonymous %}
                 <li><a href="{% url 'r_signup' %}">Sign Up</a></li>
                 {% endif %}
@@ -69,8 +88,8 @@
                                     style="margin-right: 5px;"></i> My restaurant</a>
                             <a class="dropdown-item" href="#"> <i class="fa-solid fa-key"></i>
                                 Change Password</a>
-                            <a class="dropdown-item" href="{% url 'r_logout' %}"> <i class="fa-solid fa-right-from-bracket"
-                                    style="margin-right: 5px;"></i> Sign Out</a>
+                            <a class="dropdown-item" href="{% url 'r_logout' %}"> <i
+                                    class="fa-solid fa-right-from-bracket" style="margin-right: 5px;"></i> Sign Out</a>
                             <a class="dropdown-item" href="#"> <i class="fa-solid fa-ban"></i> Delete Account</a>
                         </div>
                     </div>

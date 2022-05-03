@@ -49,6 +49,7 @@ urlpatterns = [
     path('restaurant/update_item/<int:itemID>/', r_view.Update_Item, name='update_item'),
     path('restaurant/delete_item/<int:itemID>/', r_view.delete_item, name='delete_item'),
     path('restaurant/orders/', r_view.Orders, name='orders'),
+    path('restaurant/update_status', r_view.update_status, name='update_status'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

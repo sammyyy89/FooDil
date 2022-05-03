@@ -1,7 +1,10 @@
-from re import L
+from ast import Del
+from django.db.models import F
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+import customer
 
 from restaurant.models import Restaurant_Account, Menu
 from .forms import MenuForm, R_UserForm, R_SignupForm
@@ -12,6 +15,7 @@ from django.contrib.auth.models import Group
 
 from .filters import MenuFilter
 from customer.models import *
+import json
 
 def Main(request):
     #logout(request)
@@ -136,10 +140,31 @@ def Orders(request):
 
     info = DeliveryAddress.objects.filter(restaurantID=rid)
     orders = OrderItem.objects.filter(restaurantID=rid)
-    print('orders: ', orders)
 
-    #customer = Customer_Account.objects.filter(user=orders.order)
+    items = OrderItem.objects.values('transaction_id').annotate(
+        customer=F('order__username'),
+        tid=F('transaction_id'),
+        ordered=F('item')
+    ).values('customer','tid', 'ordered')
 
+    x = [item for item in items ]
 
-    context = {'info': info, 'orders': orders, }
+    context = {'info': info, 'orders': orders, 'items': items}
     return render(request, 'restaurant/orders.html', context)
+
+@login_required(login_url='r_login')
+@allowed_users(allowed_roles=['admin', 'restaurant'])
+def update_status(request):
+    data = json.loads(request.body)
+    transaction_id = data['form']['transaction_id']
+    status = data['form']['status']
+
+    print('tid:', transaction_id)
+    print('status:', status)
+
+    customer_status = DeliveryAddress.objects.get(transaction_id=transaction_id)
+
+    customer_status.status = data['form']['status']
+    customer_status.save()
+
+    return JsonResponse("Status updated", safe=False)

@@ -51,6 +51,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True)
     addedDate = models.DateTimeField(auto_now_add=True)
     isPaid = models.BooleanField(default=False, null=True, blank=True)
+    transaction_id = models.CharField(max_length=200, null=True, blank=True)
 
     @property
     def get_total(self):
@@ -75,6 +76,7 @@ class DeliveryAddress(models.Model):
     note = models.CharField(max_length=255, default=None, null=True, blank=True)
     status = models.CharField(max_length=30, choices=[('current status', 'current status'), ('Order Received', 'Order Received'), ('Preparing', 'Preparing'), ('Picked up', 'Picked up'), ('Delivered', 'Delivered')], default="current status")
     restaurantID = models.CharField(max_length=10, null=True, blank=True, default=0)
+    transaction_id = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.address_1

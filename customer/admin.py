@@ -19,10 +19,13 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderItemAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
+class DeliveryAddressAdmin(admin.ModelAdmin):
+    readonly_fields = ('addedDate', )
+
 admin.site.unregister(User)
 admin.site.register(User, CustomizedUserAdmin)
 
 admin.site.register(Customer_Account)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
-admin.site.register(DeliveryAddress)
+admin.site.register(DeliveryAddress, DeliveryAddressAdmin)
