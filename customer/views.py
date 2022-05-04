@@ -203,7 +203,7 @@ def updateItem(request):
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
 
-    if not orderItem:
+    if not orderItem: # Nothing in cart
         print("Empty cart")
     else: # There are items in cart 
         if action == 'add':
@@ -275,7 +275,7 @@ def change_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user=form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user) 
             messages.success(request, "Password changed successfully!")
             # return redirect('index')
         else:

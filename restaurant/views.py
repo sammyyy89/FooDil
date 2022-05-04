@@ -141,8 +141,10 @@ def Orders(request):
     items = OrderItem.objects.values('transaction_id').annotate(
         customer=F('order__username'),
         tid=F('transaction_id'),
-        ordered=F('item')
+        ordered=F('item'),
     ).values('customer','tid', 'ordered')
+
+    #results = DeliveryAddress.objects.filter(status='Delivered')
 
 
     context = {'info': info, 'orders': orders, 'items': items, }

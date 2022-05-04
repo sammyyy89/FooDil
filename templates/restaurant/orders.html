@@ -9,6 +9,10 @@
         width: 50px;
 
     }
+
+    .hidden {
+        display: none;
+    }
 </style>
 
 <div class="container">
@@ -41,11 +45,11 @@
                     <input style="border: none;" type="text" name='transaction_id' readonly
                         value="{{x.transaction_id}}">
                 </td>
-                <form id="form">
+                <form id="form" class="sForm">
                     <td>
                         <select name="status" id="status" class="form-select form-select-md"
                             aria-label=".form-select-sm example">
-                            <option selected>{{x.status}}</option>
+                            <option selected disabled>{{x.status}}</option>
                             <option value="Order Received">Order Received</option>
                             <option value="Preparing">Preparing</option>
                             <option value="Picked up">Picked up</option>
@@ -55,7 +59,7 @@
                     <td><button data-trans={{x.transaction_id}} class="myBtn btn-success update-btn"><i
                                 class="fa-solid fa-pen-to-square"></i></button>
                     </td>
-                    </form>
+                </form>
 
             </tr>
             {% endfor %}
@@ -77,7 +81,6 @@
                 <td>{{order.order.id}}</td>
                 <td>{{order.order}}</td>
                 <td>{{order.item}}</td>
-
             </tr>
             {% endfor %}
         </tbody>
@@ -88,64 +91,59 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script>
-    let form = document.getElementById('form')
+    //let form = document.getElementById('form')
+    let form = document.getElementsByClassName('sForm')
     let update = document.getElementsByClassName('update-btn')
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault()
-    });
+    for (let j = 0; j < form.length; j++) {
+        form[j].addEventListener('submit', function (e) {
+            e.preventDefault()
 
-    /*
-    $("#status").change(function () {
-        let new_status = $("#status option:selected").data("target");
-        $("#submitBtn").attr("data-target", new_status);
+            for (let i = 0; i < update.length; i++) {
+                update[i].addEventListener('click', function () {
+                    let trans = this.dataset.trans
 
-        console.log("This is ", new_status)
-        location.reload()
-    }) */
+                    console.log(trans)
 
-    for (let i = 0; i < update.length; i++) {
-        update[i].addEventListener('click', function () {
-            let trans = this.dataset.trans
-            console.log(trans)
-
-            updateStatus(trans)
-        })
-    }
-
-    function updateStatus(trans) {
-        console.log("updating...")
-
-        let statusData = {
-            //'transaction_id': form.transaction_id.value,
-            'status': form.status.value,
-        }
-
-        let url = '../update_status'
-
-        fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                body: JSON.stringify({
-                    'form': statusData,
-                    'trans': trans,
+                    updateStatus(trans)
                 })
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                //alert("updated!")
+            }
 
-                swal({
-                    title: "Status updated!",
-                    text: "The customer can view their updated status :)",
-                    type: "success",
-                }).then(function () {
-                    window.location.href = "{% url 'orders' %}"
-                })
-            })
+            function updateStatus(trans) {
+                console.log("updating...")
+
+                let statusData = {
+                    //'transaction_id': form.transaction_id.value,
+                    'status': form[j].status.value,
+                }
+
+                let url = '../update_status'
+
+                fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+                        },
+                        body: JSON.stringify({
+                            'form': statusData,
+                            'trans': trans,
+                        })
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        //alert("updated!")
+
+                        swal({
+                            title: "Status updated!",
+                            text: "The customer can view their updated status :)",
+                            type: "success",
+                        }).then(function () {
+                            window.location.href = "{% url 'orders' %}"
+                        })
+                    })
+            }
+        });
     }
 </script>
 
