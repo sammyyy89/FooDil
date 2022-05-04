@@ -133,9 +133,6 @@ def delete_item(request, itemID):
 @login_required(login_url='r_login')
 @allowed_users(allowed_roles=['admin', 'restaurant'])
 def Orders(request):
-    #info = DeliveryAddress.objects.filter()
-    #orders = OrderItem.objects.filter(restaurantID=request.user.id)
-    #rid = Restaurant_Account.objects.get(restaurantID=request.user.id)
     rid = request.user.restaurant_account.restaurantID
 
     info = DeliveryAddress.objects.filter(restaurantID=rid)
@@ -147,16 +144,17 @@ def Orders(request):
         ordered=F('item')
     ).values('customer','tid', 'ordered')
 
-    x = [item for item in items ]
 
-    context = {'info': info, 'orders': orders, 'items': items}
+    context = {'info': info, 'orders': orders, 'items': items, }
     return render(request, 'restaurant/orders.html', context)
 
 @login_required(login_url='r_login')
 @allowed_users(allowed_roles=['admin', 'restaurant'])
 def update_status(request):
     data = json.loads(request.body)
-    transaction_id = data['form']['transaction_id']
+
+    #transaction_id = data['form']['transaction_id']
+    transaction_id = data['trans']
     status = data['form']['status']
 
     print('tid:', transaction_id)
@@ -166,5 +164,7 @@ def update_status(request):
 
     customer_status.status = data['form']['status']
     customer_status.save()
+    
+    print('changed to: ', customer_status.status)
 
     return JsonResponse("Status updated", safe=False)

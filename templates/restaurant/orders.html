@@ -21,6 +21,7 @@
     <table class="table table-bordered text-center">
         <thead style="background-color: #fddc57;">
             <tr>
+                <th scope="col">Order ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Note</th>
                 <th scope="col">Address</th>
@@ -32,25 +33,29 @@
         <tbody>
             {% for x in info %}
             <tr>
+                <td>{{x.order.id}}</td>
                 <td>{{x.username}}</td>
                 <td>{{x.note}}</td>
                 <td>{{x.address_2}}, {{x.address_1}}, {{x.city}}, {{x.state}}, {{x.zip_code}}</td>
-                <form id="form">
-                <td><input style="border: none;" type="text" name='transaction_id' readonly value="{{x.transaction_id}}"></td>
                 <td>
-                    <select name="status" id="stuats" class="form-select form-select-md"
-                        aria-label=".form-select-sm example">
-                        <option value="{{x.status}}">{{x.status}}</option>
-                        <option value="Order Received">Order Received</option>
-                        <option value="Preparing">Preparing</option>
-                        <option value="Picked up">Picked up</option>
-                        <option value="Delivered">Delivered</option>
-                    </select>
+                    <input style="border: none;" type="text" name='transaction_id' readonly
+                        value="{{x.transaction_id}}">
                 </td>
-                <td><button class="myBtn btn-success update-btn" id="submitBtn"><i
-                            class="fa-solid fa-pen-to-square"></i></button>
-                </td>
-                </form>
+                <form id="form">
+                    <td>
+                        <select name="status" id="status" class="form-select form-select-md"
+                            aria-label=".form-select-sm example">
+                            <option selected>{{x.status}}</option>
+                            <option value="Order Received">Order Received</option>
+                            <option value="Preparing">Preparing</option>
+                            <option value="Picked up">Picked up</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                    </td>
+                    <td><button data-trans={{x.transaction_id}} class="myBtn btn-success update-btn"><i
+                                class="fa-solid fa-pen-to-square"></i></button>
+                    </td>
+                    </form>
 
             </tr>
             {% endfor %}
@@ -61,6 +66,7 @@
     <table class="table table-bordered text-center">
         <thead style="background-color: #fddc57;">
             <tr>
+                <th scope="col">Order ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Items</th>
             </tr>
@@ -68,8 +74,10 @@
         <tbody>
             {% for order in orders %}
             <tr>
+                <td>{{order.order.id}}</td>
                 <td>{{order.order}}</td>
                 <td>{{order.item}}</td>
+
             </tr>
             {% endfor %}
         </tbody>
@@ -77,24 +85,39 @@
 </div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script>
     let form = document.getElementById('form')
     let update = document.getElementsByClassName('update-btn')
 
+    form.addEventListener('submit', function (e) {
+        e.preventDefault()
+    });
+
+    /*
+    $("#status").change(function () {
+        let new_status = $("#status option:selected").data("target");
+        $("#submitBtn").attr("data-target", new_status);
+
+        console.log("This is ", new_status)
+        location.reload()
+    }) */
+
     for (let i = 0; i < update.length; i++) {
         update[i].addEventListener('click', function () {
-            console.log('status updated')
+            let trans = this.dataset.trans
+            console.log(trans)
 
-            updateStatus()
+            updateStatus(trans)
         })
     }
 
-    function updateStatus() {
+    function updateStatus(trans) {
         console.log("updating...")
 
         let statusData = {
-            'transaction_id': form.transaction_id.value,
+            //'transaction_id': form.transaction_id.value,
             'status': form.status.value,
         }
 
@@ -107,13 +130,14 @@
                     'X-CSRFToken': csrftoken,
                 },
                 body: JSON.stringify({
-                    'form': statusData
+                    'form': statusData,
+                    'trans': trans,
                 })
             })
             .then((response) => response.json())
             .then((data) => {
-                alert("updated!")
-                
+                //alert("updated!")
+
                 swal({
                     title: "Status updated!",
                     text: "The customer can view their updated status :)",
