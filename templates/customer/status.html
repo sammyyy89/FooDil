@@ -7,12 +7,12 @@
 <br>
 
 <center class="container">
-    <h1>Your order status & history</h1>
+    <h1>Your order status </h1>
     <hr>
     {% if not info %}
     <h1>Hmm...</h1>
     <br>
-    <img src="{% static 'customer/images/empty.png' %}" />
+    <img src="{% static 'customer/images/dishes.gif' %}" />
     <br><br>
     <h3>Looks like you have not ordered anything.</h3> <br>
     <h5>Click <a href="{% url 'cart' %}">here</a> if you've already added items.</h5> <br>
@@ -21,6 +21,17 @@
     {% else %}
     <form>
         {% for x in info %}
+        <br>
+        <h4>
+            <section>
+                <i class="fa-solid fa-burger"></i> <strong>You ordered: </strong>
+                {% for item in items %}
+                {% if item.transaction_id == x.transaction_id %}
+                {{item.item}}, 
+                {% endif %}
+                {% endfor %}
+            </section>
+        </h4>
         <h5>
             <div class="form-group row">
                 <label for="customer" class="col-sm-2 col-form-label">
@@ -32,6 +43,7 @@
                 </div>
             </div>
             <br>
+
             <div class="form-group row">
                 <label for="status" class="col-sm-2 col-form-label">
                     <i class="fa-solid fa-circle-question"></i> Status
@@ -115,14 +127,7 @@
 
         </h5>
         <br>
-        <h5>
-            <section>
-                <i class="fa-solid fa-burger"></i> <strong>You ordered: </strong>
-                {% for item in items %}
-                {{item}},
-                {% endfor %}
-            </section>
-        </h5>
+
         <hr>
         {% endfor %}
     </form>

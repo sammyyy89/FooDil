@@ -27,7 +27,7 @@
                         <h5>Total:<strong> $ {{order.get_cart_total|floatformat:2}}</strong></h5>
                     </th>
                     <th>
-                        {% if result == 'same' %}
+                        {% if result == 'same' or result == 'empty' %}
                         <a style="float:right; margin:5px; text-decoration: none;" class="myBtn"
                             style="background-color: #fddc57;" href="{% url 'checkout' %}">Checkout</a>
                         {% else %}
@@ -44,7 +44,7 @@
         <table class="table text-center" style="font-family: 'Montserrat', sans-serif;">
             {% if not items %}
             <center>
-                <img src="{% static 'customer/images/empty.png' %}" />
+                <img src="{% static 'customer/images/empty_cart.gif' %}" style="height: 250px; width: 500px;" />
                 <br><br>
                 <h3>Your cart is currently empty. <br> Click <a href="{% url 'order' %}">here</a> to explore nearby
                     restaurants!</h3>

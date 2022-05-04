@@ -128,7 +128,7 @@ def Cart(request):
         cartItems = order.get_cart_items
 
     rids = [x.restaurantID for x in items]
-    result = '' 
+    result = 'empty' 
     for i in range(len(rids)-1):
         if rids[i] == rids[i+1]:
             result = 'same'
@@ -263,7 +263,9 @@ def Status(request):
     customer = Customer_Account.objects.get(user=request.user.id)
     info = DeliveryAddress.objects.filter(username=customer)
 
-    context = {'info': info, }
+    items = OrderItem.objects.filter(order__username=customer)
+
+    context = {'info': info, 'items': items,}
     return render(request, 'customer/status.html', context)
 
 @login_required(login_url='login')
