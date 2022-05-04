@@ -39,6 +39,7 @@ urlpatterns = [
     path('customer/process_order/', c_view.processOrder, name='process_order'),
     path('customer/status/', c_view.Status, name='status'),
     path('customer/change_password/', c_view.change_password, name='change_password'),
+    path('customer/review/', c_view.Review, name='review'),
     
     path('restaurant/', r_view.R_Index, name='r_index'),
     path('restaurant/signup/', r_view.R_Signup, name='r_signup'),

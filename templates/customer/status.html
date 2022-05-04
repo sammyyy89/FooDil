@@ -144,16 +144,14 @@
         </h5>
         <br>
         {% if x.status == 'Delivered' %}
-        <a class="myBtn" href="#">Leave review</a>
+        <a class="myBtn" href="{% url 'review' %}" style="text-decoration: none;">Leave review</a>
         {% else %}
         <h5><strong>You can write a review after the food is delivered</strong></h5>
         {% endif %}
 
         <hr>
         {% endfor %}
-    </form>
-
-    
+    </form>>
 
     <h4 style="color: red"><strong>If any information above is incorrect, please call the restaurant as soon as
             possible.</strong></h4>

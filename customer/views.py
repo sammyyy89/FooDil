@@ -265,7 +265,9 @@ def Status(request):
 
     items = OrderItem.objects.filter(order__username=customer)
 
-    context = {'info': info, 'items': items,}
+    #order_from = OrderItem.objects.filter(order__username=customer).values_list('restaurantID', flat=True).distinct()
+
+    context = {'info': info, 'items': items, }
     return render(request, 'customer/status.html', context)
 
 @login_required(login_url='login')
@@ -284,3 +286,9 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'customer/change_password.html', {'form': form})
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin', 'customer'])
+def Review(request):
+    # 주소창 쳐서 넘어올 수 없도록 막기! 
+    return render(request, 'customer/review.html')
