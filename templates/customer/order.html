@@ -3,7 +3,7 @@
 {% block content %}
 <br>
 
-<div class="culmn">
+<div class="container">
     <h5 class="text-center" style="color: red;">Click restaurant's name to see the menu!</h5>
     <br><br>
 
@@ -19,6 +19,7 @@
                 <th scope="col">Restaurant</th>
                 <th scope="col">Image</th>
                 <th scope="col">Category</th>
+                <th scope="col">Hours</th>
                 <th scope="col">Website</th>
             </tr>
         </thead>
@@ -35,6 +36,7 @@
                     {% endif %}
                 </td>
                 <td>{{ restaurant.country}}</td>
+                <td>{{ restaurant.hours}}</td>
                 <td><a href="{{restaurant.website}}" style="text-decoration:none;">{{ restaurant.website}} </a></td>
             </tr>
             {% endfor %}

@@ -37,10 +37,11 @@ class R_SignupForm(forms.ModelForm):
     phone = forms.CharField(required=True)
     website = forms.URLField(required=False)
     country = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'e.g. Italian, Thai, Korean, Chinese, Japanese, ...'}))
+    hours = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. Mon - Fri 11:00 am - 10 pm'}))
 
     class Meta:
         model = Restaurant_Account
-        fields = ('name','phone', 'image', 'website', 'country')
+        fields = ('name','phone', 'image', 'website', 'country', 'hours')
 
 class MenuForm(forms.ModelForm):
     item = forms.CharField(required=True)

@@ -26,6 +26,7 @@ class Restaurant_Account(models.Model):
     phone = models.CharField(validators = [phoneNumberRegex], max_length = 12, unique = True)
     website = models.URLField(blank=True)
     country = models.CharField(max_length=50)
+    hours = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
         #return self.user.username
