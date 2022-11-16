@@ -50,9 +50,14 @@ By ordering virtually at any time using our system, customers can save time and 
     
  ### :seedling: System Models
 
-<a href="https://drive.google.com/file/d/1cJKBRBSwp8MVQAK-Mxb2FSYGbtq9G_PT/view?usp=sharing">Context Model</a>, <a href="https://drive.google.com/file/d/1uwkxhNAlNEOFve6XMCWlAFGN1QEVgDKo/view?usp=sharing">Use Case</a>, <a href="
-https://drive.google.com/file/d/1JtOK6CidasSFGg2jxIHS56k8pdLzzZa-/view?usp=sharing">Activity Model</a>, <a href="
-https://drive.google.com/file/d/1TENP4ck-o4Z5-ODqLmb4IMkBAVhp_65p/view?usp=sharing">Sequence Model</a>
+<a href="https://drive.google.com/file/d/1cJKBRBSwp8MVQAK-Mxb2FSYGbtq9G_PT/view?usp=sharing">Context Model</a>, <a href="https://drive.google.com/file/d/1uwkxhNAlNEOFve6XMCWlAFGN1QEVgDKo/view?usp=sharing">Use Case</a>, <a href="https://drive.google.com/file/d/1JtOK6CidasSFGg2jxIHS56k8pdLzzZa-/view?usp=sharing">Activity Model</a>, <a href="https://drive.google.com/file/d/1TENP4ck-o4Z5-ODqLmb4IMkBAVhp_65p/view?usp=sharing">Sequence Model</a>
+
+#
+
+### :paw_prints: Architectural Pattern
+Model-View-Template (MVT) architecture. 
+ 
+
 
 
     
