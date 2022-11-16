@@ -5,6 +5,26 @@ Web application for online food ordering system created with Django, Python, HTM
 
 #
 
+### :question: Why used Django?
+Django official documents introduces Django as "The web framework for perfectionists with deadlines". Django seemed to have so many advantages for me, who wanted to build a quality application within limited time periods. There are many more pros of using Django, but below are the main reasons why I chose Django to develop FooDil.  
+
+1. Highly Secure  
+  Django has built-in protection for some common security issues such as cross site scripting (XSS), cross site request forgery (CSRF), session security, and SQL injection. Also, Django automatically encrypts the passwords with a security key while transmitting data.
+  
+2. Good Official Documentation   
+The documentation provided by Django is very helpful because it is well-organized with example code.
+
+3. Built with Python    
+Python is the language I use most frequently and Django works on Python. 
+
+4. Admin Panel by Default  
+Unlike most of the other frameworks, Django offers the admin panel by default so that developers can create/read/update/delete the application's database objects. It saves so much time and effort. 
+
+5. Scalable   
+Even though FooDil is my personal side project, I assumed that it is going to be used by multiple users. Popular websites like Spotify, YouTube, and Netflix use Django and this shows that Django has the capacity to handle numerous users at a time. 
+
+#
+
 ### :bulb: Introduction
   FooDil is...
   - Independent and self-contained system
@@ -60,7 +80,8 @@ Model-View-Template (MVT) architecture.
 #
 
 ### :tulip: Project Demo
-<a href="https://drive.google.com/file/d/1FrY3DlAPn8p6kDoCgq32KBbh5W5e86Vl/view?usp=sharing">Click Me</a>
+<a href="https://drive.google.com/file/d/1FrY3DlAPn8p6kDoCgq32KBbh5W5e86Vl/view?usp=sharing">Click Me</a> 
+
 
 
 
