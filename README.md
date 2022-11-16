@@ -5,11 +5,11 @@ Web application for online food ordering system created with Django, Python, HTM
 
 #
 
-### :question: Why used Django?
-Django official documents introduces Django as "The web framework for perfectionists with deadlines". Django seemed to have so many advantages for me, who wanted to build a quality application within limited time periods. There are many more pros of using Django, but below are the main reasons why I chose Django to develop FooDil.  
+### :question: Why I Chose Django for this Project
+Django's official documentation introduces Django as "the web framework for perfectionists with deadlines". Django seemed to have many advantages to build a quality application within limited time. Below are the main reasons why I chose Django to develop FooDil.  
 
 1. Highly Secure  
-  Django has built-in protection for some common security issues such as cross site scripting (XSS), cross site request forgery (CSRF), session security, and SQL injection. Also, Django automatically encrypts the passwords with a security key while transmitting data.
+  Django has built-in protection for some common security issues such as cross site scripting (XSS), cross site request forgery (CSRF), session security, and SQL injection. Django also automatically encrypts the passwords with a security key while transmitting data.
   
 2. Good Official Documentation   
 The documentation provided by Django is very helpful because it is well-organized with example code.
@@ -18,23 +18,23 @@ The documentation provided by Django is very helpful because it is well-organize
 Python is the language I use most frequently and Django works on Python. 
 
 4. Admin Panel by Default  
-Unlike most of the other frameworks, Django offers the admin panel by default so that developers can create/read/update/delete the application's database objects. It saves so much time and effort. 
+Unlike most other frameworks, Django offers the admin panel by default so that developers can create/read/update/delete the application's database objects. This saves so much time and effort. 
 
 5. Scalable   
-Even though FooDil is my personal side project, I assumed that it is going to be used by multiple users. Popular websites like Spotify, YouTube, and Netflix use Django and this shows that Django has the capacity to handle numerous users at a time. 
+FooDil would ideally be used by multiple users. Popular websites like Spotify, YouTube, and Netflix use Django and this shows that Django has the capacity to handle numerous users at a time. 
 
 #
 
 ### :bulb: Introduction
   FooDil is...
-  - Independent and self-contained system
+  - An independent and self-contained system
   - Limited to New York City area for localized and focused service
   - Developed for both customers and restaurant owners
 
 #
 
 ### :crystal_ball: Purpose
-To help customers place an order at a restaurant conveniently and to assist restaurants manage their data such as menu, business hours, and orders from various customers easily. 
+To help customers place an order at a restaurant conveniently and assist restaurants manage their data such as menu, business hours, and orders from various customers easily. 
 By ordering virtually at any time using our system, customers can save time and money spent on travelling to pick up the food.
 
 #
@@ -50,7 +50,7 @@ By ordering virtually at any time using our system, customers can save time and 
   #### :hamburger: Restaurant
    - Registration: Restaurant staff can create a FooDil business account.
    - Login: Restaurant staff whose information exists in the database can login.
-   - Restaurant Data Management: Restaurant staff can add, update, or delete their data such as menu items 
+   - Restaurant Data Management: Restaurant staff can add, read, update, or delete their data such as menu items 
    - Order Status Update: Restaurant staff can update customers' order status, which will be seen by the customers 
    
    #
