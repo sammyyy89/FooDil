@@ -32,3 +32,27 @@ By ordering virtually at any time using our system, customers can save time and 
    - Login: Restaurant staff whose information exists in the database can login.
    - Restaurant Data Management: Restaurant staff can add, update, or delete their data such as menu items 
    - Order Status Update: Restaurant staff can update customers' order status, which will be seen by the customers 
+   
+   #
+   
+### :pencil2: Entity-Relationship (ER) Diagram for the Database
+   <img width="300" src="https://user-images.githubusercontent.com/28698521/202060698-861577b0-0e26-4cb3-a483-705af797bb0c.JPG">
+   
+   #
+   
+### :bookmark: Assumptions 
+   1. Users must be trained for basic computer functionalities 
+   2. Users must have the basic knowledge of English 
+   3. The user interface of system must be easy and simple to use 
+   4. The system must respond to every request within reasonable time (within 5 seconds)
+    
+# 
+    
+ ### :seedling: System Models
+
+<a href="https://drive.google.com/file/d/1cJKBRBSwp8MVQAK-Mxb2FSYGbtq9G_PT/view?usp=sharing">Context Model</a>, <a href="https://drive.google.com/file/d/1uwkxhNAlNEOFve6XMCWlAFGN1QEVgDKo/view?usp=sharing">Use Case</a>, <a href="
+https://drive.google.com/file/d/1JtOK6CidasSFGg2jxIHS56k8pdLzzZa-/view?usp=sharing">Activity Model</a>, <a href="
+https://drive.google.com/file/d/1TENP4ck-o4Z5-ODqLmb4IMkBAVhp_65p/view?usp=sharing">Sequence Model</a>
+
+
+    
