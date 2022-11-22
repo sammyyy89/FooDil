@@ -5,6 +5,11 @@ Web application for online food ordering system created with Django, Python, HTM
 
 #
 
+### :tulip: Project Demo
+<a href="https://drive.google.com/file/d/1FrY3DlAPn8p6kDoCgq32KBbh5W5e86Vl/view?usp=sharing">Click Me</a> 
+
+#
+
 ### :question: Why I Chose Django for this Project
 Django's official documentation introduces Django as "the web framework for perfectionists with deadlines". Django seemed to have many advantages to build a quality application within limited time. Below are the main reasons why I chose Django to develop FooDil.  
 
@@ -76,11 +81,6 @@ By ordering virtually at any time using our system, customers can save time and 
 
 ### :paw_prints: Architectural Pattern
 Model-View-Template (MVT) architecture. 
- 
-#
-
-### :tulip: Project Demo
-<a href="https://drive.google.com/file/d/1FrY3DlAPn8p6kDoCgq32KBbh5W5e86Vl/view?usp=sharing">Click Me</a> 
 
 
 
